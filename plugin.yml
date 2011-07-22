@@ -1,0 +1,17 @@
+name: SimpleWarp
+main: net.rymate.SimpleWarp.SimpleWarpPlugin
+version: 1
+commands:
+  warp:
+    description: Teleports you to the warp specified
+    usage: /warp <warpname>
+  setwarp:
+    description: Creates a new warp
+    usage: /setwarp <warpname>
+  listwarps:
+    description: Lists the warps
+    usage: /listwarps
+permissions:
+  set.warp:
+    default: op
+    description: Allows the player to set a warp

@@ -1,0 +1,21 @@
+This is my first plugin, so be nice :)
+SimpleWarp is a simple plugin for handling warps. It has 2 commands:
+
+    /warp <warpname> - Warps to the specified warp
+    /setwarp <warpname> - Creates a warp at your location
+
+In order to be able to use /setwarp, you must either be an Op or have the permissions node "set.warp" (Bukkit Permissions System)
+
+
+Features:
+
+    Warping to a warp
+    Creating new warps
+    Bukkit Permissions
+
+ToDo List (In order of importance):
+
+    Configuration File
+    iConomy support
+    MySQL/SQLite warp storage
+    Warp Lists (/listwarps shows a list of warps)
