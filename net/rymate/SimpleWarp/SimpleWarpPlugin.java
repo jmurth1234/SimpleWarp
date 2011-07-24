@@ -54,6 +54,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
     static Properties prop = new Properties(); //creates a new properties file
     // This is public so we can
     public Method Method = null;
+    public Method.MethodAccount MethodAccount;
 
     public void onEnable() {
         m_Folder = this.getDataFolder();
