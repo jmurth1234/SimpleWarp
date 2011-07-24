@@ -32,7 +32,7 @@ class SetWarpsCommand implements CommandExecutor {
             return true;
         }
 
-        if ((player.hasPermission("set.warp"))) {
+        if (!(plugin).permissionHandler.has(player, "warp.set")) {
             if (args.length < 1) {
                 return false;
             }

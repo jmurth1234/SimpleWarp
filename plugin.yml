@@ -5,13 +5,15 @@ commands:
   warp:
     description: Teleports you to the warp specified
     usage: /warp <warpname>
+    aliases: [w]
+    permission: warp.set
   setwarp:
     description: Creates a new warp
     usage: /setwarp <warpname>
+    aliases: [sw]
+    permission: warp.go
   listwarps:
     description: Lists the warps
     usage: /listwarps
-permissions:
-  set.warp:
-    default: op
-    description: Allows the player to set a warp
+    aliases: [lw]
+    permission: warp.list

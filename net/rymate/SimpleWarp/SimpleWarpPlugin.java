@@ -23,7 +23,6 @@ import org.bukkit.World;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.nijikokun.register.examples.listeners.server;
 import com.nijikokun.register.payment.Method;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
@@ -32,6 +31,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 
 /**
  *
@@ -45,7 +49,11 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public HashMap<String, Location> m_warps = new HashMap();
     public int warpPrice;
     public boolean useEconomy;
+    public boolean economyFound;
+    public static PermissionHandler permissionHandler;
     static Properties prop = new Properties(); //creates a new properties file
+    // This is public so we can
+    public Method Method = null;
 
     public void onEnable() {
         m_Folder = this.getDataFolder();
@@ -61,8 +69,6 @@ public class SimpleWarpPlugin extends JavaPlugin {
                 FileOutputStream out = new FileOutputStream(configFile); //creates a new output steam needed to write to the file
                 prop.put("use-economy", "true"); //puts someting in the properties file
                 prop.put("price-to-warp", "20"); //puts someting in the properties file
-                prop.put("warp-message", "You arrived at your destination!");
-                prop.put("warp-fail", "The warp failed to initiate.");
                 prop.store(out, "Please edit to your desires."); //You need this line! It stores what you just put into the file and adds a comment.
                 out.flush();  //flushes any unoutputed bytes to the file
                 out.close(); //Closes the output stream as it is not needed anymore.
@@ -87,6 +93,8 @@ public class SimpleWarpPlugin extends JavaPlugin {
             }
         } else {
             PluginManager pm = getServer().getPluginManager();
+            pm.registerEvent(Event.Type.PLUGIN_ENABLE, new WarpServerListener(this), Priority.Monitor, this);
+            pm.registerEvent(Event.Type.PLUGIN_DISABLE, new WarpServerListener(this), Priority.Monitor, this);
 
             log("Loading warps...");
             if (loadSettings()) {
@@ -98,13 +106,8 @@ public class SimpleWarpPlugin extends JavaPlugin {
             getCommand("setwarp").setExecutor(new SetWarpsCommand(this));
             getCommand("warp").setExecutor(new WarpCommand(this));
 //            getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
+            setupPermissions();
 
-            File toPut = new File("lib/Register.jar");
-            try {
-                download(getServer().getLogger(), new URL("https://github.com/iConomy/Register/blob/master/dist/Register.jar?raw=true"), toPut);
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
             PluginDescriptionFile pdfFile = getDescription();
             System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
         }
@@ -216,32 +219,19 @@ public class SimpleWarpPlugin extends JavaPlugin {
     }
     //end Configuration stuff
 
-    public void download(Logger log, URL url, File file) throws IOException {
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdir();
+    private void setupPermissions() {
+        if (permissionHandler != null) {
+            return;
         }
-        if (file.exists()) {
-            log("Register.jar is already there!");
-        } else {
-            file.createNewFile();
-            final int size = url.openConnection().getContentLength();
-            log("Downloading " + file.getName() + " (" + size / 1024 + "kb) ...");
-            final InputStream in = url.openStream();
-            final OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-            final byte[] buffer = new byte[1024];
-            int len, downloaded = 0, msgs = 0;
-            final long start = System.currentTimeMillis();
-            while ((len = in.read(buffer)) >= 0) {
-                out.write(buffer, 0, len);
-                downloaded += len;
-                if ((int) ((System.currentTimeMillis() - start) / 500) > msgs) {
-                    log((int) ((double) downloaded / (double) size * 100d) + "%");
-                    msgs++;
-                }
-            }
-            in.close();
-            out.close();
-            log("Download finished");
+
+        Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
+
+        if (permissionsPlugin == null) {
+            log("Permission system not detected, defaulting to OP");
+            return;
         }
+
+        permissionHandler = ((Permissions) permissionsPlugin).getHandler();
+        log("Found and will use plugin " + ((Permissions) permissionsPlugin).getDescription().getFullName());
     }
 }
