@@ -26,7 +26,7 @@ public class ListWarpsCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         String filter = args.length >= 1 ? args[0] : "";
-        String[] locs = WarpFileHandler.getList(filter);
+        String[] locs = plugin.getList(filter);
         if ((locs != null) && (locs.length >= 1)) {
             for (String i : locs) {
                 player.sendMessage(i);

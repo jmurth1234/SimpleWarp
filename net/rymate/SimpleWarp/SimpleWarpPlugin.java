@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -23,6 +25,13 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.nijikokun.register.examples.listeners.server;
 import com.nijikokun.register.payment.Method;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -90,7 +99,12 @@ public class SimpleWarpPlugin extends JavaPlugin {
             getCommand("warp").setExecutor(new WarpCommand(this));
 //            getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
 
-
+            File toPut = new File("lib/Register.jar");
+            try {
+                download(getServer().getLogger(), new URL("https://github.com/iConomy/Register/blob/master/dist/Register.jar?raw=true"), toPut);
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
             PluginDescriptionFile pdfFile = getDescription();
             System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
         }
@@ -100,6 +114,19 @@ public class SimpleWarpPlugin extends JavaPlugin {
         System.out.println("Meh. SimpleWarp disabled.");
     }
 
+    public void log(String string) {
+        System.out.println("[SimpleWarp] " + string);
+    }
+
+    public void loadProcedure() throws IOException {
+        FileInputStream in = new FileInputStream(configFile);
+        prop.load(in);
+        useEconomy = Boolean.getBoolean(prop.getProperty("use-economy"));
+        warpPrice = Integer.getInteger(prop.getProperty("price-to-warp"));
+        in.close();
+    }
+
+    //Start configuration stuff
     public boolean saveSettings() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
@@ -145,16 +172,76 @@ public class SimpleWarpPlugin extends JavaPlugin {
         return false;
     }
 
-    public void log(String string) {
-        System.out.println("[SimpleWarp] " + string);
+    public String[] getList(String name) {
+        Scanner scanner;
+        List<String> list = new ArrayList<String>();
+        try {
+            scanner = new Scanner(new FileReader(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
+
+            try {
+
+                // first use a Scanner to get each line
+                int i = 0;
+                while (scanner.hasNextLine()) {
+
+                    String[] elements = scanner.nextLine().split(",");
+
+                    if (elements[0].matches(".*" + name + ".*")) {
+                        list.add(elements[0]);
+                        i++;
+                    }
+
+                    if (i >= 8) {
+                        break;
+                    }
+
+                }
+
+            } catch (Exception e) {
+                System.out.println("Warp:" + e.getMessage());
+                e.printStackTrace();
+            } finally {
+
+                scanner.close();
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Warp:" + e.getMessage());
+        }
+
+        String[] locations = new String[list.size()];
+        list.toArray(locations);
+
+        return locations;
     }
+    //end Configuration stuff
 
-    public void loadProcedure() throws IOException {
-        FileInputStream in = new FileInputStream(configFile);
-        prop.load(in);
-        useEconomy = Boolean.getBoolean(prop.getProperty("use-economy"));
-        warpPrice = Integer.getInteger(prop.getProperty("price-to-warp"));
-        in.close();
-
+    public void download(Logger log, URL url, File file) throws IOException {
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdir();
+        }
+        if (file.exists()) {
+            log("Register.jar is already there!");
+        } else {
+            file.createNewFile();
+            final int size = url.openConnection().getContentLength();
+            log("Downloading " + file.getName() + " (" + size / 1024 + "kb) ...");
+            final InputStream in = url.openStream();
+            final OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+            final byte[] buffer = new byte[1024];
+            int len, downloaded = 0, msgs = 0;
+            final long start = System.currentTimeMillis();
+            while ((len = in.read(buffer)) >= 0) {
+                out.write(buffer, 0, len);
+                downloaded += len;
+                if ((int) ((System.currentTimeMillis() - start) / 500) > msgs) {
+                    log((int) ((double) downloaded / (double) size * 100d) + "%");
+                    msgs++;
+                }
+            }
+            in.close();
+            out.close();
+            log("Download finished");
+        }
     }
 }
