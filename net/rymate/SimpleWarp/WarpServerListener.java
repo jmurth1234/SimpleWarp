@@ -39,7 +39,7 @@ public class WarpServerListener extends ServerListener {
             if (iConomy != null) {
                 if (iConomy.isEnabled() && iConomy.getClass().getName().equals("com.iConomy.iConomy")) {
                     plugin.iConomy = (iConomy)iConomy;
-                    System.out.println("[MyPlugin] hooked into iConomy.");
+                    plugin.log("hooked into iConomy.");
                 }
             }
         }
