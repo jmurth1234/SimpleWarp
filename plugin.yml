@@ -1,6 +1,6 @@
 name: SimpleWarp
 main: net.rymate.SimpleWarp.SimpleWarpPlugin
-version: 1
+version: 2.1
 commands:
   warp:
     description: Teleports you to the warp specified

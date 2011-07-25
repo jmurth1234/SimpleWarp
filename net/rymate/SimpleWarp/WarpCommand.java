@@ -10,7 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.nijikokun.register.payment.Method;
+import com.iConomy.*;
+import com.iConomy.system.Account;
+import com.iConomy.system.Holdings;
 
 /**
  *
@@ -19,15 +21,18 @@ import com.nijikokun.register.payment.Method;
 class WarpCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
+    private iConomy iConomy;
+
 
     public WarpCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
+        plugin.iConomy = iConomy;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
 
-        if ((plugin).permissionHandler.has(player, "warp.go." + args[0])) {
+        if ((plugin).permissionHandler.has(player, "warp.go.")) {
             if (args.length < 1) {
                 return false;
             } else if (!(sender instanceof Player)) {
@@ -36,9 +41,11 @@ class WarpCommand implements CommandExecutor {
             }
 
             Location loc = (Location) plugin.m_warps.get(args[0]);
-            if ((loc != null) && (plugin.Method != null) && (plugin.useEconomy = true)) {
-                if ((plugin.Method.hasAccount(player.getName())) && plugin.MethodAccount.hasOver(plugin.warpPrice)) {
-                    plugin.MethodAccount.subtract(plugin.warpPrice);
+            if ((loc != null) && (plugin.useEconomy = true) && (iConomy != null)) {
+                Account account = iConomy.getAccount(player.getName());
+                Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
+                if ((account != null) && balance.hasEnough(plugin.warpPrice)) {
+                    balance.subtract(plugin.warpPrice);
                     player.teleportTo(loc);
                     player.sendMessage(ChatColor.GREEN + "You have arrived at your destination! " + plugin.warpPrice + "was deducted from your money.");
                 } else {

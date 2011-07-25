@@ -4,6 +4,7 @@
  */
 package net.rymate.SimpleWarp;
 
+import com.iConomy.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +24,6 @@ import org.bukkit.World;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.nijikokun.register.payment.Method;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -36,6 +36,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
+
 
 /**
  *
@@ -53,8 +54,8 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public static PermissionHandler permissionHandler;
     static Properties prop = new Properties(); //creates a new properties file
     // This is public so we can
-    public Method Method = null;
-    public Method.MethodAccount MethodAccount;
+    public iConomy iConomy = null;
+
 
     public void onEnable() {
         m_Folder = this.getDataFolder();
