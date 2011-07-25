@@ -27,7 +27,7 @@ class WarpCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
 
-        if ((plugin).permissionHandler.has(player, "warp.go")) {
+        if ((plugin).permissionHandler.has(player, "warp.go." + args[0])) {
             if (args.length < 1) {
                 return false;
             } else if (!(sender instanceof Player)) {

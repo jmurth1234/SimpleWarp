@@ -23,19 +23,23 @@ public class ListWarpsCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-
         Player player = (Player) sender;
-        String filter = args.length >= 1 ? args[0] : "";
-        String[] locs = plugin.getList(filter);
-        if ((locs != null) && (locs.length >= 1)) {
-            for (String i : locs) {
-                player.sendMessage(i);
-            }
-        } else {
-            player.sendMessage("No Warps Found");
-        }
+        if ((plugin).permissionHandler.has(player, "warp.list")) {
 
-        System.out.println(player.getName() + " listed warps ");
+            String filter = args.length >= 1 ? args[0] : "";
+            String[] locs = plugin.getList(filter);
+            if ((locs != null) && (locs.length >= 1)) {
+                for (String i : locs) {
+                    player.sendMessage(i);
+                }
+            } else {
+                player.sendMessage("No Warps Found");
+            }
+
+            System.out.println(player.getName() + " listed warps ");
+        } else {
+            player.sendMessage("You do not have the permissions to do this.");
+        }
         return true;
     }
 }
