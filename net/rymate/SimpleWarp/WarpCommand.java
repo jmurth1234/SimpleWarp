@@ -46,13 +46,15 @@ class WarpCommand implements CommandExecutor {
                 Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
                 if ((account != null) && balance.hasEnough(plugin.warpPrice)) {
                     balance.subtract(plugin.warpPrice);
-                    player.teleportTo(loc);
+                    //player.teleportTo(loc);
+                    warpPlayer(player, loc);
                     player.sendMessage(ChatColor.GREEN + "You have arrived at your destination! " + plugin.warpPrice + "was deducted from your money.");
                 } else {
                     player.sendMessage(ChatColor.RED + "You do not have enough money :(");
                 }
             } else if (loc != null) {
-                player.teleportTo(loc);
+                //player.teleportTo(loc);
+                warpPlayer(player, loc);
                 player.sendMessage(ChatColor.GREEN + "You have arrived at your destination!");
             } else {
                 player.sendMessage(ChatColor.RED + "There is no warp with that name!");
@@ -61,5 +63,17 @@ class WarpCommand implements CommandExecutor {
             player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");
         }
         return true;
+    }
+
+    private void warpPlayer(Player player, Location loc){
+        Block block = loc.getBlock();
+        while (block.getRelative(0, 1, 0).getTypeId() != 0 && block.getY() < 126) {
+            if (block.getRelative(0, 2, 0).getTypeId() != 0) {
+                block = block.getRelative(0, 3, 0);
+            } else {
+                block = block.getRelative(0, 2, 0);
+            }
+        }
+        player.teleport(new Location(block.getWorld(), block.getX(), block.getY(), block.getZ(), loc.getYaw(), loc.getPitch()));
     }
 }
