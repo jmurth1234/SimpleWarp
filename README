@@ -1,21 +1,46 @@
-This is my first plugin, so be nice :)
-SimpleWarp is a simple plugin for handling warps. It has 2 commands:
+Simplewarp readme file: (copied from teh forum post)
+    This is my first plugin, so be nice :)
+    SimpleWarp is a simple plugin for handling warps. It has 3 commands:
 
-    /warp <warpname> - Warps to the specified warp
-    /setwarp <warpname> - Creates a warp at your location
+        /warp <warpname> - Warps to the specified warp (Permissions node warp.go)
+        /setwarp <warpname> - Creates a warp at your location (Permissions node warp.set)
+        /listwarps - List the first 8 warps in your warps.txt file. (Permissions node warp.list)
 
-In order to be able to use /setwarp, you must either be an Op or have the permissions node "set.warp" (Bukkit Permissions System)
+    Features:
+
+        Warping to a warp
+        Creating new warps
+        Permissions
+        Warp listing
+        Economy Support
 
 
-Features:
+    ToDo List (In order of importance):
+    Red is not done, Orange is in progress, green is done (and coming in the next version!)
 
-    Warping to a warp
-    Creating new warps
-    Bukkit Permissions
+        Configuration File
+        iConomy support
+        MySQL/SQLite warp storage
+        Warp Lists (/listwarps shows a list of warps) DONE! It can show up to 8 warps :p
+        Multiple warp list pages
 
-ToDo List (In order of importance):
+    Changelog:
+    Version 2.1:
 
-    Configuration File
-    iConomy support
-    MySQL/SQLite warp storage
-    Warp Lists (/listwarps shows a list of warps)
+        Fixed a major bug with /warp
+
+
+    Version 2:
+
+        Adds a Config file!
+        Permissions 3.x support!
+        Economy support!
+        Warp listing!
+
+    Version 1
+
+        Initial Release
+
+    Building from Source:
+    If you wish to build from source, import the source files into your favorite IDE and set craftbukkit, iConomy and Permissions as libaries
+    Then just compile :)
