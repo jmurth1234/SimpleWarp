@@ -32,17 +32,19 @@ class SetWarpsCommand implements CommandExecutor {
             return true;
         }
 
-        if ((plugin).permissionHandler.has(player, "warp.set")) {
-            if (args.length < 1) {
-                return false;
-            }
-                plugin.m_warps.put(args[0], player.getLocation());
-                player.sendMessage(ChatColor.GREEN + "Warp Created!");
-                plugin.saveSettings();
-                return true;
-            } else {
-                player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");
-            }
+        if (((plugin).permissionHandler.has(player, "warp.set")) && ((plugin).permissionsUsage = true)) {
+            plugin.m_warps.put(args[0], player.getLocation());
+            player.sendMessage(ChatColor.GREEN + "Warp Created!");
+            plugin.saveSettings();
             return true;
+        } else if ((player.isOp()) && ((plugin).permissionsUsage = false)) {
+            plugin.m_warps.put(args[0], player.getLocation());
+            player.sendMessage(ChatColor.GREEN + "Warp Created!");
+            plugin.saveSettings();
+            return true;
+        } else {
+            player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");
         }
+        return true;
     }
+}

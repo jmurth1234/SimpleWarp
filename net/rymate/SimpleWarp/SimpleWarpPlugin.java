@@ -55,6 +55,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
     static Properties prop = new Properties(); //creates a new properties file
     // This is public so we can
     public iConomy iConomy = null;
+    public boolean permissionsUsage;
 
 
     public void onEnable() {
@@ -223,6 +224,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
 
     private void setupPermissions() {
         if (permissionHandler != null) {
+            permissionsUsage = true;
             return;
         }
 
@@ -230,6 +232,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
 
         if (permissionsPlugin == null) {
             log("Permission system not detected, defaulting to OP");
+            permissionsUsage = false;
             return;
         }
 

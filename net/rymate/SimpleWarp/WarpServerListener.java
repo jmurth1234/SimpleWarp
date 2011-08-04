@@ -26,7 +26,7 @@ public class WarpServerListener extends ServerListener {
         if (plugin.iConomy != null) {
             if (event.getPlugin().getDescription().getName().equals("iConomy")) {
                 plugin.iConomy = null;
-                System.out.println("[MyPlugin] un-hooked from iConomy.");
+                plugin.log("un-hooked from iConomy.");
             }
         }
     }
