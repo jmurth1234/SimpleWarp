@@ -47,7 +47,6 @@ class WarpCommand implements CommandExecutor {
                 Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
                 if ((account != null) && balance.hasEnough(plugin.warpPrice)) {
                     balance.subtract(plugin.warpPrice);
-                    //player.teleportTo(loc);
                     warpPlayer(player, loc);
                     player.sendMessage(ChatColor.GREEN + "You have arrived at your destination! " + plugin.warpPrice + "was deducted from your money.");
                 } else {
