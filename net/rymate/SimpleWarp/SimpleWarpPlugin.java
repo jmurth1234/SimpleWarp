@@ -17,17 +17,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.io.BufferedOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -108,7 +102,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
             getCommand("listwarps").setExecutor(new ListWarpsCommand(this));
             getCommand("setwarp").setExecutor(new SetWarpsCommand(this));
             getCommand("warp").setExecutor(new WarpCommand(this));
-//            getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
+            getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
             setupPermissions();
 
             PluginDescriptionFile pdfFile = getDescription();
