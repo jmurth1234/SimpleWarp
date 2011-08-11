@@ -17,19 +17,28 @@ commands:
     usage: /listwarps
     aliases: [lw]
     permission: warp.list
+  delwarp:
+    description: Deletes a warp
+    usage: /delwarp <warpame>
+    aliases: [dw]
+    permission: warp.delete
   home:
     description: Teleports you to your home
     usage: /warp <warpname>
-    aliases: [w]
+    aliases: [h]
     permission: home.go
   sethome:
     description: Sets your home
     usage: /setwarp <warpname>
-    aliases: [sw]
+    aliases: [sh]
     permission: home.set
   visithome:
     description: Visit another player's home
     usage: /visithome
     aliases: [vh]
     permission: home.visit
-
+  delwarp:
+    description: Deletes your home
+    usage: /delhome
+    aliases: [dh]
+    permission: warp.delete
