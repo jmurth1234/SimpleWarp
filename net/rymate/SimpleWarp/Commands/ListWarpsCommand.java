@@ -2,7 +2,7 @@
 package net.rymate.SimpleWarp.Commands;
 
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
-import org.bukkit.Location;
+import net.rymate.SimpleWarp.WarpFileHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 public class ListWarpsCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
+    WarpFileHandler warp = new WarpFileHandler();
 
     public ListWarpsCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
@@ -25,7 +26,7 @@ public class ListWarpsCommand implements CommandExecutor {
         if (player.hasPermission("warp.list")) {
 
             String filter = args.length >= 1 ? args[0] : "";
-            String[] locs = plugin.getList(filter);
+            String[] locs = warp.getList(filter);
             if ((locs != null) && (locs.length >= 1)) {
                 for (String i : locs) {
                     player.sendMessage(i);

@@ -29,10 +29,9 @@ public class WarpFileHandler {
     public File m_Folder;
     public File configFile; // = new File(m_Folder + File.separator + "config.properties");
     public HashMap<String, Location> m_warps = new HashMap();
-    private final SimpleWarpPlugin plugin;
+    private final SimpleWarpPlugin plugin = new SimpleWarpPlugin();
 
-    public WarpFileHandler(SimpleWarpPlugin plugin) {
-        this.plugin = plugin;
+    public WarpFileHandler() {
         this.m_Folder = plugin.getDataFolder();
     }
     //Start configuration stuff

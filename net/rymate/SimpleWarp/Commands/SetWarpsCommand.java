@@ -2,6 +2,7 @@
 package net.rymate.SimpleWarp.Commands;
 
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
+import net.rymate.SimpleWarp.WarpFileHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +16,8 @@ import org.bukkit.entity.Player;
 public class SetWarpsCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
+    WarpFileHandler warp = new WarpFileHandler();
+
 
     public SetWarpsCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
@@ -33,7 +36,7 @@ public class SetWarpsCommand implements CommandExecutor {
         if (player.hasPermission("warp.set")) {
             plugin.m_warps.put(args[0], player.getLocation());
             player.sendMessage(ChatColor.GREEN + "Warp Created!");
-            plugin.saveSettings();
+            warp.saveSettings();
             return true;
         } else {
             player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");

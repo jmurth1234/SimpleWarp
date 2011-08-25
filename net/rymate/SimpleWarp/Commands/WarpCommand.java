@@ -12,6 +12,7 @@ import com.iConomy.system.Account;
 import com.iConomy.system.Holdings;
 import org.bukkit.block.Block;
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
+import net.rymate.SimpleWarp.WarpFileHandler;
 
 /**
  *
@@ -21,6 +22,8 @@ public class WarpCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
     private iConomy iConomy;
+    WarpFileHandler warp = new WarpFileHandler();
+
 
     public WarpCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
@@ -38,7 +41,7 @@ public class WarpCommand implements CommandExecutor {
                 return true;
             }
 
-            Location loc = (Location) plugin.m_warps.get(args[0]);
+            Location loc = (Location) warp.m_warps.get(args[0]);
             if ((loc != null) && (plugin.useEconomy = true) && (iConomy != null)) {
                 Account account = iConomy.getAccount(player.getName());
                 Holdings balance = iConomy.getAccount(player.getName()).getHoldings();

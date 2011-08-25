@@ -49,6 +49,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public boolean useEconomy;
     public boolean economyFound;
     static Properties prop = new Properties(); //creates a new properties file
+    WarpFileHandler warp = new WarpFileHandler(this);
     // This is public so we can
     public iConomy iConomy = null;
 
@@ -95,7 +96,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
             pm.registerEvent(Event.Type.PLUGIN_DISABLE, new WarpServerListener(this), Priority.Monitor, this);
 
             log("Loading warps...");
-            if (loadSettings()) {
+            if (warp.loadSettings()) {
                 log("Done!");
             } else {
                 log("FAILED");
@@ -125,97 +126,4 @@ public class SimpleWarpPlugin extends JavaPlugin {
         warpPrice = Integer.getInteger(prop.getProperty("price-to-warp"));
         in.close();
     }
-
-    //Start configuration stuff
-    public boolean saveSettings() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
-            for (Map.Entry entry : this.m_warps.entrySet()) {
-                Location loc = (Location) entry.getValue();
-                if (loc != null) {
-                    writer.write((String) entry.getKey() + "," + loc.getX() + "," + loc.getBlockY() + "," + loc.getBlockZ() + "," + loc.getPitch() + "," + loc.getYaw() + "," + loc.getWorld().getName());
-                    writer.newLine();
-                }
-            }
-            writer.close();
-            return true;
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return false;
-    }
-
-    public boolean loadSettings() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
-            String line = reader.readLine();
-            while (line != null) {
-                String[] values = line.split(",");
-                if (values.length == 7) {
-                    double X = Double.parseDouble(values[1]);
-                    double Y = Double.parseDouble(values[2]);
-                    double Z = Double.parseDouble(values[3]);
-                    float pitch = Float.parseFloat(values[4]);
-                    float yaw = Float.parseFloat(values[5]);
-
-                    World world = getServer().getWorld(values[6]);
-                    if (world != null) {
-                        this.m_warps.put(values[0], new Location(world, X, Y, Z, yaw, pitch));
-                    }
-                }
-                line = reader.readLine();
-            }
-            return true;
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return false;
-    }
-
-    public String[] getList(String name) {
-        Scanner scanner;
-        List<String> list = new ArrayList<String>();
-        try {
-            scanner = new Scanner(new FileReader(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
-
-            try {
-
-                // first use a Scanner to get each line
-                int i = 0;
-                while (scanner.hasNextLine()) {
-
-                    String[] elements = scanner.nextLine().split(",");
-
-                    if (elements[0].matches(".*" + name + ".*")) {
-                        list.add(elements[0]);
-                        i++;
-                    }
-
-                    if (i >= 8) {
-                        break;
-                    }
-
-                }
-
-            } catch (Exception e) {
-                System.out.println("Warp:" + e.getMessage());
-                e.printStackTrace();
-            } finally {
-
-                scanner.close();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Warp:" + e.getMessage());
-        }
-
-        String[] locations = new String[list.size()];
-        list.toArray(locations);
-
-        return locations;
-    }
-    //end Configuration stuff
-
-        
-    
 }
