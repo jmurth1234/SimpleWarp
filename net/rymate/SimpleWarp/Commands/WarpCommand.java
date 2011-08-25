@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package net.rymate.SimpleWarp.Commands;
 
 import org.bukkit.ChatColor;
@@ -63,11 +60,9 @@ public class WarpCommand implements CommandExecutor {
         } else {
             player.sendMessage(ChatColor.RED + "There is no warp with that name!");
         }
-
-
         return true;
     }
-
+    
     private void warpPlayer(Player player, Location loc) {
         Block block = loc.getBlock();
         while (block.getRelative(0, 1, 0).getTypeId() != 0 && block.getY() < 126) {

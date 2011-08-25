@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package net.rymate.SimpleWarp.Commands;
 
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
