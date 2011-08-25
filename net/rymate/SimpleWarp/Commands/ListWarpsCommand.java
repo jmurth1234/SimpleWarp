@@ -25,7 +25,7 @@ public class ListWarpsCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
-        if ((plugin).permissionHandler.has(player, "warp.list")) {
+        if (player.hasPermission("warp.list")) {
 
             String filter = args.length >= 1 ? args[0] : "";
             String[] locs = plugin.getList(filter);

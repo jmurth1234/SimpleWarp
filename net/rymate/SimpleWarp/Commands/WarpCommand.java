@@ -33,7 +33,7 @@ public class WarpCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
 
-        if (((plugin).permissionsPlugin != null) && ((plugin).permissionHandler.has(player, "warp.go"))) {
+        if (player.hasPermission("warp.go")) {
             if (args.length < 1) {
                 return false;
             } else if (!(sender instanceof Player)) {
@@ -53,36 +53,17 @@ public class WarpCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "You do not have enough money :(");
                 }
             } else if (loc != null) {
-                //player.teleportTo(loc);
                 warpPlayer(player, loc);
                 player.sendMessage(ChatColor.GREEN + "You have arrived at your destination!");
             } else {
                 player.sendMessage(ChatColor.RED + "There is no warp with that name!");
             }
-        } else if (((plugin).permissionsPlugin != null) && (!(plugin).permissionHandler.has(player, "warp.go"))) {
-
+        } else if (!player.hasPermission("warp.set")) {
             player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");
-
-        } else if ((plugin).permissionsPlugin == null) {
-            Location loc = (Location) plugin.m_warps.get(args[0]);
-            if ((loc != null) && (plugin.useEconomy = true) && (iConomy != null)) {
-                Account account = iConomy.getAccount(player.getName());
-                Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
-                if ((account != null) && balance.hasEnough(plugin.warpPrice)) {
-                    balance.subtract(plugin.warpPrice);
-                    warpPlayer(player, loc);
-                    player.sendMessage(ChatColor.GREEN + "You have arrived at your destination! " + plugin.warpPrice + "was deducted from your money.");
-                } else {
-                    player.sendMessage(ChatColor.RED + "You do not have enough money :(");
-                }
-            } else if (loc != null) {
-                //player.teleportTo(loc);
-                warpPlayer(player, loc);
-                player.sendMessage(ChatColor.GREEN + "You have arrived at your destination!");
-            } else {
-                player.sendMessage(ChatColor.RED + "There is no warp with that name!");
-            }
+        } else {
+            player.sendMessage(ChatColor.RED + "There is no warp with that name!");
         }
+
 
         return true;
     }

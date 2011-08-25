@@ -33,12 +33,7 @@ public class SetWarpsCommand implements CommandExecutor {
             return true;
         }
 
-        if (((plugin).permissionsPlugin != null) && ((plugin).permissionHandler.has(player, "warp.set"))  ) {
-            plugin.m_warps.put(args[0], player.getLocation());
-            player.sendMessage(ChatColor.GREEN + "Warp Created!");
-            plugin.saveSettings();
-            return true;
-        } else if ((player.isOp()) && ((plugin).permissionsPlugin == null )) {
+        if (player.hasPermission("warp.set")) {
             plugin.m_warps.put(args[0], player.getLocation());
             player.sendMessage(ChatColor.GREEN + "Warp Created!");
             plugin.saveSettings();
