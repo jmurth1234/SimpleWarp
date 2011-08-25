@@ -49,7 +49,7 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public boolean useEconomy;
     public boolean economyFound;
     static Properties prop = new Properties(); //creates a new properties file
-    WarpFileHandler warp = new WarpFileHandler(this);
+    WarpFileHandler warp = new WarpFileHandler();
     // This is public so we can
     public iConomy iConomy = null;
 
