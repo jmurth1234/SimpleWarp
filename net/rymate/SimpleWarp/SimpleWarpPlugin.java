@@ -4,6 +4,10 @@
  */
 package net.rymate.SimpleWarp;
 
+import net.rymate.SimpleWarp.Commands.ListWarpsCommand;
+import net.rymate.SimpleWarp.Commands.WarpCommand;
+import net.rymate.SimpleWarp.Commands.DeleteWarpCommand;
+import net.rymate.SimpleWarp.Commands.SetWarpsCommand;
 import com.iConomy.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +29,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -45,11 +48,9 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public int warpPrice;
     public boolean useEconomy;
     public boolean economyFound;
-    public static PermissionHandler permissionHandler;
     static Properties prop = new Properties(); //creates a new properties file
     // This is public so we can
     public iConomy iConomy = null;
-    public boolean permissionsUsage;
 
 
     public void onEnable() {
@@ -103,7 +104,6 @@ public class SimpleWarpPlugin extends JavaPlugin {
             getCommand("setwarp").setExecutor(new SetWarpsCommand(this));
             getCommand("warp").setExecutor(new WarpCommand(this));
             getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
-            setupPermissions();
 
             PluginDescriptionFile pdfFile = getDescription();
             System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
@@ -216,21 +216,6 @@ public class SimpleWarpPlugin extends JavaPlugin {
     }
     //end Configuration stuff
 
-    private void setupPermissions() {
-        if (permissionHandler != null) {
-            permissionsUsage = true;
-            return;
-        }
-
-        Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
-
-        if (permissionsPlugin == null) {
-            log("Permission system not detected, defaulting to OP");
-            permissionsUsage = false;
-            return;
-        }
-
-        permissionHandler = ((Permissions) permissionsPlugin).getHandler();
-        log("Found and will use plugin " + ((Permissions) permissionsPlugin).getDescription().getFullName());
-    }
+        
+    
 }
