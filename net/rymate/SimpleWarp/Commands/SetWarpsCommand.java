@@ -31,7 +31,7 @@ public class SetWarpsCommand implements CommandExecutor {
             return true;
         }
 
-        if (player.hasPermission("warp.set")) {
+        if (player.hasPermission("SimpleWarp.setwarp")) {
             plugin.m_warps.put(args[0], player.getLocation());
             player.sendMessage(ChatColor.GREEN + "Warp Created!");
             warp.saveSettings();

@@ -26,7 +26,7 @@ public class WarpCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
 
-        if (player.hasPermission("warp.go")) {
+        if (player.hasPermission("SimpleWarp.warp")) {
             if (args.length < 1) {
                 return false;
             } else if (!(sender instanceof Player)) {
@@ -41,7 +41,7 @@ public class WarpCommand implements CommandExecutor {
             } else {
                 player.sendMessage(ChatColor.RED + "There is no warp with that name!");
             }
-        } else if (!player.hasPermission("warp.go")) {
+        } else if (!player.hasPermission("SimpleWarp.warp")) {
             player.sendMessage(ChatColor.RED + "You do not have the permissions to use this command.");
         } else {
             player.sendMessage(ChatColor.RED + "There is no warp with that name!");

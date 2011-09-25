@@ -6,39 +6,39 @@ commands:
     description: Teleports you to the warp specified
     usage: /warp <warpname>
     aliases: [w]
-    permission: warp.go
+    permission: SimpleWarp.warp
   setwarp:
     description: Creates a new warp
     usage: /setwarp <warpname>
     aliases: [sw]
-    permission: warp.set
+    permission: SimpleWarp.setwarp
   listwarps:
     description: Lists the warps
     usage: /listwarps
     aliases: [lw]
-    permission: warp.list
+    permission: SimpleWarp.listwarps
   delwarp:
     description: Deletes a warp
     usage: /delwarp <warpame>
     aliases: [dw]
-    permission: warp.delete
+    permission: SimpleWarp.delwarp
   home:
     description: Teleports you to your home
-    usage: /warp <warpname>
+    usage: /home
     aliases: [h]
-    permission: home.go
+    permission: SimpleWarp.home
   sethome:
     description: Sets your home
-    usage: /setwarp <warpname>
+    usage: /sethome
     aliases: [sh]
-    permission: home.set
+    permission: SimpleWarp.sethome
   visithome:
     description: Visit another player's home
     usage: /visithome
     aliases: [vh]
-    permission: home.visit
+    permission: SimpleWarp.visithome
   delwarp:
     description: Deletes your home
     usage: /delhome
     aliases: [dh]
-    permission: warp.delete
+    permission: SimpleWarp.delhome
