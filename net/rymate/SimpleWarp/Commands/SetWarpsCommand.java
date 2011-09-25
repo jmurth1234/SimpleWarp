@@ -1,4 +1,3 @@
-
 package net.rymate.SimpleWarp.Commands;
 
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
@@ -10,7 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author Ryan
  */
 public class SetWarpsCommand implements CommandExecutor {

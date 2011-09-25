@@ -4,23 +4,13 @@
  */
 package net.rymate.SimpleWarp;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.*;
+import java.util.*;
 
 /**
- *
  * @author rymate
  */
 public class WarpFileHandler {
