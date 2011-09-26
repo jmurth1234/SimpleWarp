@@ -16,19 +16,23 @@ import java.util.*;
 public class WarpFileHandler {
 
     public final String FILE_WARPS = "warps.txt";
-    public File m_Folder;
     public File configFile; // = new File(m_Folder + File.separator + "config.properties");
     public HashMap<String, Location> m_warps = new HashMap();
-    private final SimpleWarpPlugin plugin = new SimpleWarpPlugin();
+    private final SimpleWarpPlugin plugin;
+    public File warpFile = new File("plugins/SimpleWarp/warps.txt");
 
-    public WarpFileHandler() {
-        this.m_Folder = plugin.getDataFolder();
+
+    public WarpFileHandler(SimpleWarpPlugin warpPlugin) {
+        this.plugin = warpPlugin;
+
     }
+
+
     //Start configuration stuff
 
     public boolean saveSettings() {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.warpFile));
             for (Map.Entry entry : this.m_warps.entrySet()) {
                 Location loc = (Location) entry.getValue();
                 if (loc != null) {
@@ -46,7 +50,7 @@ public class WarpFileHandler {
 
     public boolean loadSettings() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(this.warpFile));
             String line = reader.readLine();
             while (line != null) {
                 String[] values = line.split(",");
@@ -75,7 +79,7 @@ public class WarpFileHandler {
         Scanner scanner;
         List<String> list = new ArrayList<String>();
         try {
-            scanner = new Scanner(new FileReader(this.m_Folder.getAbsolutePath() + File.separator + "warps.txt"));
+            scanner = new Scanner(new FileReader(this.warpFile));
 
             try {
 
@@ -113,5 +117,7 @@ public class WarpFileHandler {
 
         return locations;
     }
+
+
     //end Configuration stuff
 }

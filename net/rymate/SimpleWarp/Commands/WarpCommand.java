@@ -16,12 +16,13 @@ import org.bukkit.entity.Player;
 public class WarpCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
-    WarpFileHandler warp = new WarpFileHandler();
 
 
     public WarpCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
     }
+
+    WarpFileHandler warp = new WarpFileHandler(this.plugin);
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;

@@ -14,12 +14,13 @@ import org.bukkit.entity.Player;
 public class SetWarpsCommand implements CommandExecutor {
 
     private final SimpleWarpPlugin plugin;
-    WarpFileHandler warp = new WarpFileHandler();
 
 
     public SetWarpsCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
     }
+
+    WarpFileHandler warp = new WarpFileHandler(this.plugin);
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player player = (Player) sender;
@@ -32,7 +33,7 @@ public class SetWarpsCommand implements CommandExecutor {
         }
 
         if (player.hasPermission("SimpleWarp.setwarp")) {
-            plugin.m_warps.put(args[0], player.getLocation());
+            warp.m_warps.put(args[0], player.getLocation());
             player.sendMessage(ChatColor.GREEN + "Warp Created!");
             warp.saveSettings();
             return true;

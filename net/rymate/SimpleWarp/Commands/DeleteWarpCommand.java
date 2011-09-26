@@ -5,6 +5,7 @@
 package net.rymate.SimpleWarp.Commands;
 
 import net.rymate.SimpleWarp.SimpleWarpPlugin;
+import net.rymate.SimpleWarp.WarpFileHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,6 +21,8 @@ public class DeleteWarpCommand implements CommandExecutor {
     public DeleteWarpCommand(SimpleWarpPlugin plugin) {
         this.plugin = plugin;
     }
+
+    WarpFileHandler warp = new WarpFileHandler(this.plugin);
 
     public boolean onCommand(CommandSender cs, Command cmd, String string, String[] strings) {
         throw new UnsupportedOperationException("Not supported yet.");
