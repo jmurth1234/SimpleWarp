@@ -1,0 +1,98 @@
+name: SimpleWarp
+main: net.rymate.SimpleWarp.SimpleWarpPlugin
+version: 2.3
+commands:
+  warp:
+    description: Teleports you to the warp specified
+    usage: /warp <warpname>
+    aliases: [w]
+    permission: SimpleWarp.warp
+  setwarp:
+    description: Creates a new warp
+    usage: /setwarp <warpname>
+    aliases: [sw]
+    permission: SimpleWarp.setwarp
+  listwarps:
+    description: Lists the warps
+    usage: /listwarps
+    aliases: [lw]
+    permission: SimpleWarp.listwarps
+  delwarp:
+    description: Deletes a warp
+    usage: /delwarp <warpame>
+    aliases: [dw]
+    permission: SimpleWarp.delwarp
+  home:
+    description: Teleports you to your home
+    usage: /home
+    aliases: [h]
+    permission: SimpleWarp.home
+  sethome:
+    description: Sets your home
+    usage: /sethome
+    aliases: [sh]
+    permission: SimpleWarp.sethome
+  visithome:
+    description: Visit another player's home
+    usage: /visithome
+    aliases: [vh]
+    permission: SimpleWarp.visithome
+  delhome:
+    description: Deletes your home
+    usage: /delhome
+    aliases: [dh]
+    permission: SimpleWarp.delhome
+permissions:
+  SimpleWarp.all:
+    description: Gives access to all SimpleWarp commands
+    children:
+      SimpleWarp.allhome: true
+      SimpleWarp.allwarp: true
+  SimpleWarp.allhome:
+    description: Gives you EVERY home command
+    children:
+      SimpleWarp.home: true
+      SimpleWarp.sethome: true
+      SimpleWarp.visithome: true
+      SimpleWarp.delhome: true
+    default: false
+  SimpleWarp.allwarp:
+    description: Gives you EVERY warp command
+    children:
+      SimpleWarp.warp: true
+      SimpleWarp.setwarp: true
+      SimpleWarp.listwarps: true
+      SimpleWarp.delwarp: true
+    default: false
+  SimpleWarp.user:
+    description: Commands normal users should need
+    children:
+      SimpleWarp.home: true
+      SimpleWarp.sethome: true
+      SimpleWarp.delhome: true
+      SimpleWarp.warp: true
+    default: false
+  SimpleWarp.home:
+    description: allows users to go home
+    default: false
+  SimpleWarp.sethome:
+    description: allows users to set their home
+    default: false
+  SimpleWarp.visithome:
+    description: allows users to visit another users home
+    default: false
+  SimpleWarp.delhome:
+    description: Allows users to delete home
+    default: false
+  SimpleWarp.warp:
+    description: Allows people to warp
+    default: false
+  SimpleWarp.setwarp:
+    description: Allows people to create a new warp
+    default: false
+  SimpleWarp.delwarp:
+    description: Allows people to delete a warp
+    default: false
+  SimpleWarp.listwarps:
+    description: Allows people to list warps
+    default: false
