@@ -28,8 +28,6 @@ public class SimpleWarpPlugin extends JavaPlugin {
     public HashMap<String, Location> m_warps = new HashMap();
     static Properties prop = new Properties(); //creates a new properties file
     WarpFileHandler warp = new WarpFileHandler(this);
-    CallHome blockface = new CallHome();
-
 
     public void onEnable() {
         m_Folder = this.getDataFolder();
@@ -59,7 +57,6 @@ public class SimpleWarpPlugin extends JavaPlugin {
         getCommand("setwarp").setExecutor(new SetWarpsCommand(this));
         getCommand("warp").setExecutor(new WarpCommand(this));
         getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
-        blockface.load(this);
 
         PluginDescriptionFile pdfFile = getDescription();
         System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
